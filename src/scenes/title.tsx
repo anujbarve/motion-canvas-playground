@@ -474,9 +474,26 @@ export default makeScene2D(function* (view) {
   for (const slide of slides) {
     yield* beginSlide(slide.id);
 
-    yield* title().text(slide.title,2);
-    description().text(slide.description.trim());
+    yield* all(
+      title().text(slide.title, 1),
+      description().text(slide.description.trim(), 1)
+    );
+
+    switch (slide.id) {
+      case 'slide2':
+        yield* title().scale(0.3, 0.5);
+        yield* title().scale(0.25, 0.5);
+        break;
+
+      case 'slide4':
+        const startX = description().position.x();
+        description().position.x(startX - 300);
+        yield* description().position.x(startX, 1);
+        break;
+
+    }
   }
+
 
 
 });
